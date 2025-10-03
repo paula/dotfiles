@@ -25,3 +25,5 @@ while read df; do
   mkdir -p "$(dirname "$link")"
   ln -sf "$df" "$link"
 done
+
+sudo apt-get update && sudo apt-get install -y cowsay
