@@ -27,3 +27,7 @@ while read df; do
 done
 
 sudo apt-get update && sudo apt-get install -y cowsay
+sudo apt-get install -y fzf
+
+# Install fzf keybindings + completion
+/usr/share/doc/fzf/examples/install --key-bindings --completion --no-update-rc
