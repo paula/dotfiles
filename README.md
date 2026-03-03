@@ -1,3 +1,3 @@
 # dotfiles repo
 
-hi! my
+hi! my name
