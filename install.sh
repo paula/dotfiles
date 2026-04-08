@@ -11,8 +11,29 @@ while read df; do
   ln -sf "$df" "$link"
 done
 
-sudo apt-get update && sudo apt-get install -y cowsay
-sudo apt-get install -y fzf
+OS="$(uname -s)"
 
-# Install fzf keybindings + completion (if available)
-[ -f /usr/share/doc/fzf/examples/install ] && /usr/share/doc/fzf/examples/install --key-bindings --completion --no-update-rc || true
+if [[ "$OS" == "Darwin" ]]; then
+  # macOS (laptop)
+  if ! command -v brew &>/dev/null; then
+    echo "Homebrew not found. Install it from https://brew.sh first."
+    exit 1
+  fi
+
+  brew install cowsay fzf
+
+  # Install fzf keybindings + completion
+  "$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc
+
+elif [[ "$OS" == "Linux" ]]; then
+  # Linux (remote container)
+  sudo apt-get update && sudo apt-get install -y cowsay fzf
+
+  # Install fzf keybindings + completion (if available)
+  [ -f /usr/share/doc/fzf/examples/install ] && \
+    /usr/share/doc/fzf/examples/install --key-bindings --completion --no-update-rc || true
+
+else
+  echo "Unsupported OS: $OS"
+  exit 1
+fi
